@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+     <title>Beat Force Beatmap Generator App</title>
+
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+     <meta name="description" content="">
+     <meta name="keywords" content="">
+     <meta name="author" content="">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+     <link rel="stylesheet" href="css/bootstrap.min.css">
+     <link rel="stylesheet" href="css/font-awesome.min.css">
+     <link rel="stylesheet" href="css/aos.css">
+
+     <script  src="eel.js"></script>
+     <script  src="main.js"></script>
+
+     <!-- MAIN CSS -->
+     <link rel="stylesheet" href="css/tooplate-gymso-style.css">
+<!--
+Tooplate 2119 Gymso Fitness
+https://www.tooplate.com/view/2119-gymso-fitness
+-->
+
+
+</head>
+<body data-spy="scroll" data-target="#navbarNav" data-offset="50">
+
+    <!-- MENU BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+
+            <a class="navbar-brand" href="index.html">Beat Force</a>
+
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-lg-auto">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link smoothScroll">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link smoothScroll">About Us</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#class" class="nav-link smoothScroll">Classes</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#schedule" class="nav-link smoothScroll">Schedules</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="#contact" class="nav-link smoothScroll">Contact</a>
+                    </li>
+                </ul>
+
+                <ul class="social-icon ml-lg-3">
+                    <li><a href="https://fb.com/tooplate" class="fa fa-facebook"></a></li>
+                    <li><a href="#" class="fa fa-twitter"></a></li>
+                    <li><a href="#" class="fa fa-instagram"></a></li>
+                </ul>
+            </div> -->
+
+        </div>
+    </nav>
+
+
+     <!-- HERO -->
+     <section class="hero d-flex flex-column justify-content-center align-items-center" id="home">
+
+            <div class="bg-overlay"></div>
+
+               <div class="container">
+                    <div class="row">
+
+                         <div class="col-lg-8 col-md-10 mx-auto col-12">
+                              <div class="hero-text mt-5 text-center">
+
+                                    <h6 data-aos="fade-up" data-aos-delay="300">A new way to generate Beatmaps for Beat Saber</h6>
+
+                                    <h1 class="text-white" data-aos="fade-up" data-aos-delay="500">BEAT FORCE<br>The Beatmap Generator</h1>
+
+                                    <a href="#feature" class="btn custom-btn bordered mt-3" data-aos="fade-up" data-aos-delay="600">Get started</a>
+
+                                    <a href="#about" class="btn custom-btn bordered mt-3" data-aos="fade-up" data-aos-delay="700">learn more</a>
+
+                                    
+                                    
+                                   
+                              </div>
+                         </div>
+
+                    </div>
+               </div>
+     </section>
+
+
+     <section class="feature" id="feature">
+        <div class="container">
+            <div class="row">
+
+                <div class="d-flex flex-column justify-content-center ml-lg-auto mr-lg-5 col-lg-5 col-md-6 col-12">
+                    <h2 class="mb-3 text-white" >Try the force</h2>
+
+                    <h6 class="mb-4 text-white" >Upload a music file of your choice to get started</h6>
+
+               <!--     <p data-aos="fade-up" data-aos-delay="200"></p>-->
+
+                    
+                        <!-- <h6 class="mb-4 text-white" data-aos="fade-up">Select a song to upload:</h6> -->
+                        <form>
+                            <input id="input" class="btn custom-btn bg-color mt-3" type="button" value="Select song" onclick="getfilepath()" >
+                            <!-- <label for="input" class="mb-3 text-white" >Upload file</label> -->
+                            <!-- <label type="text" id="filename_display" value=""></label> -->
+                            <div class="mb-3 text-white" id="file-upload-filename"></div>             
+                            <!-- <input  type="file" name="fileToUpload" id="fileToUpload"> -->
+                        </form>
+                        
+                </div>
+
+                <div class="mr-lg-auto mt-3 col-lg-4 col-md-6 col-12">
+                     <div class="about-working-hours">
+                          <div>
+
+                                <h6 class="mb-4 text-white" >Select your Beatmap features and hit generate</h6>
+                                <select class="btn dropbtn mt-3" name="difficulty" id="difficulty">
+                                    <option value="easy">easy</option>
+                                    <option value="normal">normal</option>
+                                    <option value="hard">hard</option>
+                                    <option value="expert">expert</option>
+                                    <option value="expertPlus">expertPlus</option>
+                                  </select>
+
+                                  <!-- Add icon library -->
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+                                <!-- Add font awesome icons to buttons (note that the fa-spin class rotates the icon) -->
+
+                                  <a class="btn custom-btn bg-color mt-3" id= "generate" onclick="generateBeatMap()" autocomplete="off">Generate Beatmap</a>
+
+                                  <!-- <div class="container py-3">
+                                    <div class="progress">
+                                    <div id="load" class="progress-bar progress-bar-striped active"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"  style="width:0%">
+                                      0%
+                                    </div>
+                                  </div> -->
+                                    <a id= "pop_up_message" style="display: none;" class="btn custom-btn bg-color mt-3" data-toggle="modal" data-target="#membershipForm" data-aos="fade-up" data-aos-delay="300"  autocomplete="off"></a>
+                                    
+                                </div>
+                               <!-- <strong class="d-block" data-aos="fade-up" data-aos-delay="600">Sunday : Closed</strong>
+
+                               <strong class="mt-3 d-block" data-aos="fade-up" data-aos-delay="700">Monday - Friday</strong>
+
+                                <p data-aos="fade-up" data-aos-delay="800">7:00 AM - 10:00 PM</p>
+
+                                <strong class="mt-3 d-block" data-aos="fade-up" data-aos-delay="700">Saturday</strong>
+
+                                <p data-aos="fade-up" data-aos-delay="800">6:00 AM - 4:00 PM</p> -->
+                               </div>
+                          </div>
+                     </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+
+     <!-- ABOUT -->
+     <section class="about section" id="about">
+        <div class="container">
+             <div class="row">
+
+                     <div class="mt-lg-5 mb-lg-0 mb-4 col-lg-5 col-md-10 mx-auto col-12">
+                         <h2 class="mb-4" data-aos="fade-up" data-aos-delay="300">What is the Beat Force App?</h2>
+
+                         <p data-aos="fade-up" data-aos-delay="400">Beat Force is a desktop app to generate Beatmap data from a given song file using a trained
+                            machine learning model.</p>
+
+                         <!-- <p data-aos="fade-up" data-aos-delay="500">If you have any question regarding <a rel="nofollow" href="https://www.tooplate.com/view/2119-gymso-fitness" target="_parent">Gymso Fitness HTML template</a>, you can <a rel="nofollow" href="https://www.tooplate.com/contact" target="_parent">contact Tooplate</a> immediately. Thank you.</p> -->
+
+                     </div>
+
+                     <div class="ml-lg-auto col-lg-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="700">
+                         <div>
+                             <img src="images/team/team-image.jpg" class="img-fluid" alt="Trainer">
+
+                         </div>
+                     </div>
+
+                     
+
+             </div>
+        </div>
+</section>
+
+
+
+
+
+
+     <!-- FOOTER -->
+     <footer class="site-footer">
+          <div class="container">
+               <div class="row">
+
+                    <div class="ml-auto col-lg-4 col-md-5">
+                        <p class="copyright-text">Serious Games Praktikum P10 
+                            <br>Beat Force - The AI Beatmap Generator
+                        </a></p>
+                    </div>
+
+                    <!-- <div class="d-flex justify-content-center mx-auto col-lg-5 col-md-7 col-12">
+                        <p class="mr-4">
+                            <i class="fa fa-envelope-o mr-1"></i>
+                            <a href="#">hello@company.co</a>
+                        </p>
+
+                        <p><i class="fa fa-phone mr-1"></i> 010-020-0840</p>
+                    </div>
+                     -->
+               </div>
+          </div>
+     </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="membershipForm" tabindex="-1" role="dialog" aria-labelledby="membershipFormLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <div>
+            <h2 class="modal-title" id="membershipFormLabel">Congratulations!</h2>
+           
+            
+              
+            <div>
+            <h6 class="modal-title" id="membershipFormLabel">Your Beatmap has been generated</h6>
+            <div>
+            <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+            <p >Look for the zipped folder in your selected path, unzip the folder, <br> and place it in the 'CustomMusic' folder in the Beat Saber directory</p>
+
+<!-- Auto width -->
+<!-- <button class="btn"><i class="fa fa-download"></i> Download</button> -->
+</div>
+</div>
+</div>
+<!-- Full width
+<button class="btn" style="width:100%"><i class="fa fa-download"></i> Download</button>
+            <button type="submit" class="form-control" id="submit-button" name="submit">Submit Button</button>
+
+          </div> -->
+
+          <!-- <div class="modal-body">
+            <form class="membership-form webform" role="form">
+                <input type="text" class="form-control" name="cf-name" placeholder="John Doe">
+
+                <input type="email" class="form-control" name="cf-email" placeholder="Johndoe@gmail.com">
+
+                <input type="tel" class="form-control" name="cf-phone" placeholder="123-456-7890" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+
+                <textarea class="form-control" rows="3" name="cf-message" placeholder="Additional Message"></textarea>
+
+               
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="signup-agree">
+                    <label class="custom-control-label text-small text-muted" for="signup-agree">I agree to the <a href="#">Terms &amp;Conditions</a>
+                    </label>
+                </div>
+            </form>
+          </div> -->
+
+          <div class="modal-footer"></div>
+
+        </div>
+      </div>
+    </div>
+
+     <!-- SCRIPTS -->
+     <script src="js/jquery.min.js"></script>
+     <script src="js/bootstrap.min.js"></script>
+     <script src="js/aos.js"></script>
+     <script src="js/smoothscroll.js"></script>
+     <script src="js/custom.js"></script>
+
+</body>
+</html>
