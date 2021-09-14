@@ -2,7 +2,7 @@
 This is the Serious Games Project Submission Group P10 SS2021
 
 This project uses Anaconda Environments. 
-> Anaconda is a distribution of the Python and R programming languages for scientific computing (data science, machine learning applications, large-scale data processing, > > predictive analytics, etc.), that aims to simplify package management and deployment.
+> Anaconda is a distribution of the Python and R programming languages for scientific computing (data science, machine learning applications, large-scale data processing, predictive analytics, etc.), that aims to simplify package management and deployment.
 
 If not already done so, please install Anaconda by following the usual steps described in this link: https://www.anaconda.com/products/individual-d
 
