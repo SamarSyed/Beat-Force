@@ -23,3 +23,10 @@ To start the Beat Force app just type the following command into the open Anacon
 ```
 python MapGeneration.py
 ```
+
+If setting up the environment does not work, you can simply install all needed libraries using the `requirements.txt` file and the pip installer for python.
+Just execute the follwoing command in windows cmd after chaging into the project directory:
+
+```
+pip install -r requirements.txt
+```
