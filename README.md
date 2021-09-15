@@ -33,17 +33,14 @@ pip install -r requirements.txt
 ## Structure of the project
 
 The contains the following files and folders:
-`envs` folder: stores the environment information for the Anaconda environment for this project
-
-`models` folder: stores the trained Hidden Markov Models, one model for each difficulty level
-
-`Test Songs` folder: contains some songs in .mp3 format that can be used to test the Beat Force app
-
-`web` folder: contains all files and folders relevant to the UI
-`HMM_modeling.py`: defines function for training the HMM models as well as predicting with the trained models
-`Map Generation.py`: is the main file for this project which contains the high level functions to take in an input song, preprocess it, generate a beatmap, pack it into a zip file and communicate with the UI
-`README.md`: describes how to set up and use the project
-`beatforce.ico`: is the icon for the Beat Force app
-`beatforce.yml`: is the Anaconda environment file that contains information about the installed packages
-`cover.jpg`: is the cover picture for generated beatmaps
+`envs` folder: stores the environment information for the Anaconda environment for this project  
+`models` folder: stores the trained Hidden Markov Models, one model for each difficulty level  
+`Test Songs` folder: contains some songs in .mp3 format that can be used to test the Beat Force app  
+`web` folder: contains all files and folders relevant to the UI  
+`HMM_modeling.py`: defines function for training the HMM models as well as predicting with the trained models  
+`Map Generation.py`: is the main file for this project which contains the high level functions to take in an input song, preprocess it, generate a beatmap, pack it into a zip file and communicate with the UI  
+`README.md`: describes how to set up and use the project  
+`beatforce.ico`: is the icon for the Beat Force app  
+`beatforce.yml`: is the Anaconda environment file that contains information about the installed packages  
+`cover.jpg`: is the cover picture for generated beatmaps  
 `requirements.txt`: is the requirements file containing a list of all necessary libraries for the project
