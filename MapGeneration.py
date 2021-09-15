@@ -22,33 +22,27 @@ import pandas as pd
 import librosa
 import json
 import pickle
-# from io import BytesIO, TextIOWrapper, StringIO
 from zipfile import ZipFile
 import os
 import soundfile as sf
 import audioread
 from pydub import AudioSegment
-# import markovify
-# import sklearn.cluster
-# import scipy
-# import sys
-# import argparse
 import shutil
 
 
 
 #Main Function:
 
-def beat_map_synthesizer(song_path, song_name, difficulty, model, k=5, version = 2):
+def beat_map_generator(song_path, song_name, difficulty, model, k=5, version = 2):
     
     if model == 'HMM':
         HMM_mapper(song_path, song_name, difficulty, version = version)
     else:
-        print('Please specify model for mapping.')
+        print('Please choose a model for the mapping.')
 
 #Basic File Writing Functions
-def write_info(song_name, bpm, difficulty):
-    """This function creates the 'info.dat' file that needs to be included in the custom folder."""
+def write_info_file(song_name, bpm, difficulty):
+    """This function creates the 'info.dat' file that needs to be included in the beatamp zip file."""
 
     difficulty_rank = None
     jump_movement = None
@@ -77,7 +71,7 @@ def write_info(song_name, bpm, difficulty):
             '_songName': f"{song_name}",
             '_songSubName': '',
             '_songAuthorName': '',
-            '_levelAuthorName': 'BeatMapSynth',
+            '_levelAuthorName': 'Beat Force',
             '_beatsPerMinute': round(bpm),
             '_songTimeOffset': 0,
             '_shuffle': 0,
@@ -99,10 +93,10 @@ def write_info(song_name, bpm, difficulty):
         json.dump(info, f)
 
 def write_level(difficulty, events_list, notes_list, obstacles_list):
-    """This function creates the 'level.dat' file that contains all the data for that paticular difficulty level"""
+    """This function creates the 'level.dat' file that contains all the block placements and level data needed to play the level."""
     
     level = {'_version': '2.0.0',
-             '_customData': {'_time': '', #not sure what time refers to 
+             '_customData': {'_time': '',  
                              '_BPMChanges': [], 
                              '_bookmarks': []},
              '_events': events_list,
@@ -112,8 +106,7 @@ def write_level(difficulty, events_list, notes_list, obstacles_list):
         json.dump(level, f)
 
 def music_file_converter(song_path):
-    """This function makes sure the file type of the provided song will be converted to the music file type that 
-    Beat Saber accepts"""
+    """This function takes in an input song files and converts it into an acceptable format"""
     if song_path.endswith('.mp3'):
         AudioSegment.from_mp3(song_path).export('song.egg', format='ogg')
     elif song_path.endswith('.wav'):
@@ -126,16 +119,6 @@ def music_file_converter(song_path):
         shutil.copy2(song_path, 'song.egg')
     else:
         print("Unsupported song file type. Choose a file of type .mp3, .wav, .flv, .raw, or .ogg.")
-
-def events_writer(beat_times):
-    """Placeholder function for writing a list of events to be incorporated into a beatmap file. May have future support."""
-    events_list = []
-    return events_list
-
-def obstacles_writer(beat_times, difficulty):
-    """Placeholder function for writing a list of obstacles to be incorporated into a beatmap file."""
-    obstacles_list = []
-    return obstacles_list
 
 def zip_folder_exporter(song_name, difficulty):
     save_path = btn_SavePathClick()
@@ -155,17 +138,14 @@ def beat_features(song_path):
     """This function takes in the song stored at 'song_path' and estimates the bpm and beat times."""
     #Load song and split into harmonic and percussive parts.
     y, sr = librosa.load(song_path)
-    #y_harmonic, y_percussive = librosa.effects.hpss(y)
     #Isolate beats and beat times
     bpm, beat_frames = librosa.beat.beat_track(y=y, sr=sr, trim = False)
     beat_times = librosa.frames_to_time(beat_frames, sr=sr)
     return bpm, beat_times, y, sr
 
-
-
 #Hidden Markov Models Mapping Functions
 def HMM_mapper(song_path, song_name, difficulty, version = 2):
-    """This function generates a custom map based on a Hidden Markov Model."""
+    """This function generates a beatmap with the trained Hidden Markov Models."""
     #Load song and get beat features
     print("Loading Song...")
     bpm, beat_times, y, sr = beat_features(song_path)
@@ -174,20 +154,20 @@ def HMM_mapper(song_path, song_name, difficulty, version = 2):
     #Write lists for note placement, event placement, and obstacle placement
     print("Mapping with Hidden Markov Model...")
     notes_list = HMM_notes_writer(beat_times, difficulty, version)
-    events_list = events_writer(beat_times)
-    obstacles_list = obstacles_writer(beat_times, difficulty)
+    events_list = []
+    obstacles_list = [] # used later for obstacle and lightshow generation
     print("Mapping done!")
     #Write and zip files
     print("Writing files to disk...")
-    write_info(song_name, bpm, difficulty)
+    write_info_file(song_name, bpm, difficulty)
     write_level(difficulty, events_list, notes_list, obstacles_list)
     print("Converting music file...")
     music_file_converter(song_path)
     print("Zipping folder...")
     zip_folder_exporter(song_name, difficulty)
-    print("Finished! Look for zipped folder in your current path, unzip the folder, and place in the 'CustomMusic' folder in the Beat Saber directory")
+    print("Finished! Look for zipped folder in your selected path, unzip the folder, and place in the 'CustomLevels' folder in the Beat Saber directory")
 
-def walk_to_df(walk):
+def sequence_to_df(walk):
     """Function for turning a Markov walk sequence into a DataFrame of note placement predictions"""
     sequence = []
     for step in walk:
@@ -200,7 +180,7 @@ def walk_to_df(walk):
     return df
 
 def HMM_notes_writer(beat_list, difficulty, version):
-    """Writes a list of notes based on a Hidden Markov Model walk."""
+    """Writes a list of notes based on a Hidden Markov Model sequence."""
     #Load model
     if version == 1:
         with open(f"./models/HMM_{difficulty}.pkl", 'rb') as m:
@@ -225,7 +205,7 @@ def HMM_notes_writer(beat_list, difficulty, version):
     random_walk = MC.walk()
     while len(random_walk) < len(beats):
         random_walk = MC.walk()
-    df_walk = walk_to_df(random_walk)
+    df_walk = sequence_to_df(random_walk)
     #Combine beat numbers with HMM walk steps
     df_preds = pd.concat([pd.DataFrame(beats, columns = ['_time']), df_walk], axis = 1, sort = True)
     df_preds.dropna(axis = 0, inplace = True)
@@ -253,9 +233,7 @@ def HMM_notes_writer(beat_list, difficulty, version):
 
 def choose_rate(db, difficulty):
     """
-    This function modulates the block placement rate by using the average amplitude (i.e., 'loudness') across beats to choose how many blocks per beat will be placed. Takes in the difficulty level and the amplitude and returns an integer in the set {0, 1, 2, 4, 8, 16}.
-    
-    If you are finding that your maps are too fast or too slow for you, you might want to play with the probabilities in this file.
+    This function modulates the block placement rate by using the average amplitude (i.e., 'loudness') across beats to choose how many blocks per beat will be placed.
     """
     db = np.abs(db)
     p = None
@@ -393,7 +371,7 @@ def generate(song_path, difficulty):
     song_name = os.path.splitext(tail)[0]
     print("success: got follwing song path" + song_path)
     # return "success: got follwing song path" + song_path
-    beat_map_synthesizer(song_path, song_name, difficulty, 'HMM', k=5, version = 2)
+    beat_map_generator(song_path, song_name, difficulty, 'HMM', k=5, version = 2)
     return "success"
 
 @eel.expose
@@ -405,7 +383,7 @@ def dummy(param):
 
 
 
-# beat_map_synthesizer("Funky-Town-Playa-Phonk.ogg", 'funky town HMM v2', 'expertPlus', 'HMM', k=5, version = 2)
+# beat_map_generator("Funky-Town-Playa-Phonk.ogg", 'funky town HMM v2', 'expertPlus', 'HMM', k=5, version = 2)
 
 
 # In[ ]:

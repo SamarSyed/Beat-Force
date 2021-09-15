@@ -18,7 +18,7 @@ import os
 
 
 def make_sequence(df):
-    """Returns a sequence of 'words' that describe the placement and type of blocks for use in a HMM generator."""
+    """Returns a sequence that describe the placement and type of blocks for use in a HMM generator."""
     df_notes = df.iloc[:, 13:]
     df_notes.drop(index = df_notes[(df_notes == 999).all(axis = 1)].index, axis = 0, inplace = True)
     df_notes.reset_index(drop = True, inplace = True)
@@ -47,7 +47,7 @@ def make_sequence(df):
     return seq
 
 def generate_corpus(difficulty):
-    """This function generates a corpus of 'sentences' for training a HMM with markovify for a specified difficulty level."""
+    """This function generates a corpus of sequences for training a HMM with markovify for a chosen difficulty level."""
     corpus = []
     filelist = [f for f in os.listdir('./data/processed_data/')]
     for f in tqdm(filelist):
@@ -59,12 +59,12 @@ def generate_corpus(difficulty):
     return corpus
 
 def train_HMM(corpus):
-    """This function trains the HMM given a corpus of 'sentences'."""
+    """This function trains the HMM given a corpus of sequences."""
     MC = markovify.Chain(corpus, 5)
     return MC
 
 def HMM(difficulty):
-    """Wrapper function for building a corpus and training a HMM all in one."""
+    """Top level function for building a corpus and training a HMM all in one."""
     corpus = generate_corpus(difficulty)
     print("Corpus generated")
     MC = train_HMM(corpus)
