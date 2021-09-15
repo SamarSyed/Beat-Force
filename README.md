@@ -15,6 +15,8 @@ execute the following commands:
 
 ```
 conda env create --file beatforce.yml
+```
+```
 conda activate beatforce
 ```
 
