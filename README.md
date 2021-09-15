@@ -32,7 +32,7 @@ pip install -r requirements.txt
 ```
 ## Structure of the project
 
-The contains the following files and folders:
+The contains the following files and folders:  
 `envs` folder: stores the environment information for the Anaconda environment for this project  
 `models` folder: stores the trained Hidden Markov Models, one model for each difficulty level  
 `Test Songs` folder: contains some songs in .mp3 format that can be used to test the Beat Force app  
