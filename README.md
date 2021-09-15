@@ -34,8 +34,11 @@ pip install -r requirements.txt
 
 The contains the following files and folders:
 `envs` folder: stores the environment information for the Anaconda environment for this project
+
 `models` folder: stores the trained Hidden Markov Models, one model for each difficulty level
+
 `Test Songs` folder: contains some songs in .mp3 format that can be used to test the Beat Force app
+
 `web` folder: contains all files and folders relevant to the UI
 `HMM_modeling.py`: defines function for training the HMM models as well as predicting with the trained models
 `Map Generation.py`: is the main file for this project which contains the high level functions to take in an input song, preprocess it, generate a beatmap, pack it into a zip file and communicate with the UI
